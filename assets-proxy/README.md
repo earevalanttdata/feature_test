@@ -103,7 +103,6 @@ If using the provided Postman collection, update the URLs accordingly to match t
 
 ## 7. Testing
 The project includes both **unit** and **integration tests** using JUnit and Spring Boot Test.  
-Tests cover domain logic, persistence layer, and REST endpoints.
 
 Tests can be executed with:
 ```bash
