@@ -1,5 +1,7 @@
 package es.nttdata.assetsproxy.application.usecase;
 
+import es.nttdata.assetsproxy.domain.exception.AssetNotFoundException;
+import es.nttdata.assetsproxy.domain.exception.BusinessException;
 import es.nttdata.assetsproxy.domain.model.Asset;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 import es.nttdata.assetsproxy.domain.port.repository.AssetRepositoryPort;
@@ -14,7 +16,14 @@ public class SearchAssetsUseCase {
 
     private final AssetRepositoryPort repository;
 
-    public List<Asset> search(SearchCriteria criteria) {
-        return repository.search(criteria);
+    public List<Asset> search(SearchCriteria criteria){
+        if (criteria == null) {
+            throw new BusinessException("Search criteria must not be null");
+        }
+        List<Asset> result = repository.search(criteria);
+        if(result == null){
+            throw new AssetNotFoundException("No assets found with the provided criteria");
+        }
+        return result;
     }
 }
