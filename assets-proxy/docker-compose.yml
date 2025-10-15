@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------
+  # 1. Servicio de Base de Datos PostgreSQL
+  # ----------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: assets-proxy-db
+    restart: always
+    environment:
+      POSTGRES_DB: assetsdb
+      POSTGRES_USER: assets
+      POSTGRES_PASSWORD: assets
+    volumes:
+      # Inicialización de la DB con esquema
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U assets -d assetsdb" ]
+      interval: 5s     # Ejecuta la prueba cada 5 segundos
+      timeout: 5s      # Espera 5 segundos por el resultado
+      retries: 5       # Repite 5 veces antes de marcar como "unhealthy"
+  # ----------------------------------------------------
+  # 2. Servicio de Aplicación Spring Boot
+  # ----------------------------------------------------
+  app:
+    # Construye la imagen usando el Dockerfile en este directorio
+    build: .
+    container_name: assets-proxy-app
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      # Las variables de Spring usan el nombre del servicio 'db' para la conexión
+      DB_URL: jdbc:postgresql://db:5432/assetsdb
+      DB_USER: assets
+      DB_PASS: assets
+    # Asegura que la DB se inicie antes que la app
+    depends_on:
+      db:
+        condition: service_healthy

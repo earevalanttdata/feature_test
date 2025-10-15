@@ -10,10 +10,14 @@ spring:
     password: ${DB_PASS:assets}
     hikari:
       maximum-pool-size: 5
+  sql:
+    init:
+      mode: always
   jpa:
     hibernate:
       ddl-auto: none
     open-in-view: false
+    defer-datasource-initialization: false
     properties:
       hibernate.jdbc.time_zone: UTC
   jackson:

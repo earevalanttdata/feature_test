@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS assets (
     CHECK (status IN ('PENDING','UPLOADING','COMPLETED','FAILED'))
 );
 
--- Índices básicos (tal como los tienes)
 CREATE INDEX IF NOT EXISTS idx_assets_upload_date ON assets (upload_date DESC);
-CREATE INDEX IF NOT EXISTS idx_assets_filename     ON assets (filename);
-CREATE INDEX IF NOT EXISTS idx_assets_status       ON assets (status);
+CREATE INDEX IF NOT EXISTS idx_assets_filename ON assets (filename);
+CREATE INDEX IF NOT EXISTS idx_assets_status ON assets (status);
