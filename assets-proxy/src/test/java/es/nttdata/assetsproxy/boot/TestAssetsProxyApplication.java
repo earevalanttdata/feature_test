@@ -1,4 +1,4 @@
-package es.nttdata.assetsproxy;
+package es.nttdata.assetsproxy.boot;
 
 import org.springframework.boot.SpringApplication;
 
