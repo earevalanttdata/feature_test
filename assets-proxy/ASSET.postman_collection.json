@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "b3809842-a05d-4d3a-8553-550c6f245c47",
+		"name": "ASSET",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "5268440"
+	},
+	"item": [
+		{
+			"name": "query",
+			"item": [
+				{
+					"name": "assetsDESC",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/mgmt/1/assets"
+					},
+					"response": []
+				},
+				{
+					"name": "assetsASC",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/mgmt/1/assets?sortDirection=ASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"mgmt",
+								"1",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "sortDirection",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assetsByFilename",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/mgmt/1/assets?filename=preview_producto&sortDirection=ASC\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"mgmt",
+								"1",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": "preview_producto"
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assetsByDatesRange",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/mgmt/1/assets?uploadDateStart=2025-10-03T00:00:00Z&uploadDateEnd=2025-10-07T23:59:59Z&sortDirection=ASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"mgmt",
+								"1",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "uploadDateStart",
+									"value": "2025-10-03T00:00:00Z"
+								},
+								{
+									"key": "uploadDateEnd",
+									"value": "2025-10-07T23:59:59Z"
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assetsNoContent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/mgmt/1/assets?filename=preview_productos&sortDirection=ASC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"mgmt",
+								"1",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "filename",
+									"value": "preview_productos"
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "assetComplete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"filename\": \"logo_empresa.png\",\r\n  \"encodedFile\": \"aG9sYQ==\",\r\n  \"contentType\": \"image/png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/mgmt/1/assets/actions/upload"
+					},
+					"response": []
+				},
+				{
+					"name": "assetInvalidEncoded",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"filename\": \"foto.png\",\r\n  \"encodedFile\": \"###no_es_base64###\",\r\n  \"contentType\": \"image/png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/mgmt/1/assets/actions/upload"
+					},
+					"response": []
+				},
+				{
+					"name": "assetNoValidType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"filename\": \"manual.pdf\",\r\n  \"encodedFile\": \"aG9sYQ==\",\r\n  \"contentType\": \"application/pdf\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/mgmt/1/assets/actions/upload"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "actuator",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/actuator/health"
+			},
+			"response": []
+		}
+	]
+}
