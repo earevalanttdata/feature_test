@@ -111,16 +111,7 @@ mvn test
 
 ---
 
-## 8. Possible Improvements
-- Add **pagination** and **sorting enhancements** in the asset search endpoint.
-- Extend upload validation with advanced content-type checking.
-- Implement **Reactive (WebFlux)** or **Virtual Threads** for improved concurrency handling.
-- Integrate security (JWT or OAuth2) for restricted asset operations.
-- Enhance observability with detailed metrics and tracing.
-
----
-
-## 9. References
+## 8. References
 - API specification: `openapi.yml`
 - Database schema: `schema.sql`
 - Postman collection: `ASSET.postman_collection.json`
@@ -129,7 +120,7 @@ mvn test
 
 ---
 
-## 10. Quick Commands Reference
+## 9. Quick Commands Reference
 | Action | Command |
 |--------|----------|
 | Build without tests | `mvn clean package -DskipTests` |
