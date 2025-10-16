@@ -14,7 +14,7 @@ class AssetEntityMapperImplTest {
     private final AssetEntityMapper mapper = new AssetEntityMapperImpl();
 
     @Test
-    void toEntity_and_back() {
+    void should_map_domain_to_entity_and_back_consistently() {
         OffsetDateTime now = OffsetDateTime.now();
         Asset domain = new Asset(1L, "banner.jpg", "image/jpeg", 123L,
                 "images/banner.jpg", now, AssetStatus.COMPLETED);
@@ -28,5 +28,8 @@ class AssetEntityMapperImplTest {
         Asset roundtrip = mapper.toDomain(entity);
         assertThat(roundtrip.getId()).isEqualTo(1L);
         assertThat(roundtrip.getStatus()).isEqualTo(AssetStatus.COMPLETED);
+        assertThat(entity.getUrl()).isEqualTo("images/banner.jpg");
+        assertThat(entity.getSize()).isEqualTo(123L);
+        assertThat(entity.getUploadDate()).isEqualTo(now);
     }
 }

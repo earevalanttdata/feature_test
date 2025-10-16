@@ -26,14 +26,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AssetUploadControllerITTest {
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
     @Autowired
-    ObjectMapper om;
+    private ObjectMapper om;
 
     @MockitoBean
-    UploadAssetUseCase uploadAssetUseCase;
+    private UploadAssetUseCase uploadAssetUseCase;
     @MockitoBean
-    AssetDtoMapper assetDtoMapper;
+    private AssetDtoMapper assetDtoMapper;
 
     @Test
     void upload_validates_body() throws Exception {

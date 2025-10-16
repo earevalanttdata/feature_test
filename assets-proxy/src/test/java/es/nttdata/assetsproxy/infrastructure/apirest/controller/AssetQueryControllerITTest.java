@@ -32,12 +32,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AssetQueryControllerITTest {
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @MockitoBean
-    SearchAssetsUseCase useCase;
+    private SearchAssetsUseCase useCase;
     @MockitoBean
-    AssetDtoMapper mapper;
+    private AssetDtoMapper mapper;
 
     @Test
     void search_maps_query_params_and_returns_list() throws Exception {
