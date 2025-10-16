@@ -8,4 +8,5 @@ public record SearchCriteria(
         String filenamePattern,
         String filetype,
         SortDirection sortDirection
-) { }
+) {
+}

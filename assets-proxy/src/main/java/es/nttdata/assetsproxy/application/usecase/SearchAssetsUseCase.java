@@ -6,10 +6,12 @@ import es.nttdata.assetsproxy.domain.model.Asset;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 import es.nttdata.assetsproxy.domain.port.repository.AssetRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SearchAssetsUseCase {
@@ -24,6 +26,7 @@ public class SearchAssetsUseCase {
         if(result == null){
             throw new AssetNotFoundException("No assets found with the provided criteria");
         }
+        log.info("Items found {}", result.size());
         return result;
     }
 }

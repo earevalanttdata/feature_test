@@ -6,6 +6,7 @@ import es.nttdata.assetsproxy.domain.model.SortDirection;
 import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetResponseDto;
 import es.nttdata.assetsproxy.infrastructure.apirest.mapper.AssetDtoMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/mgmt/1/assets")
@@ -45,7 +47,7 @@ public class AssetQueryController {
         SortDirection direction = "ASC".equalsIgnoreCase(sortDirection)?SortDirection.ASC:SortDirection.DESC;
 
         SearchCriteria criteria = new SearchCriteria(uploadDateStart, uploadDateEnd, filenamePattern, filetype, direction);
-
+        log.info("Search assets by {}", criteria);
         List<AssetResponseDto> response = mapper.toResponseDtoList(useCase.search(criteria));
 
         if (response.isEmpty()) {
