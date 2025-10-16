@@ -76,7 +76,7 @@ The REST API definition is provided in `openapi.yml`. It exposes endpoints for:
 The **GET** endpoint supports the following optional filters:
 - `uploadDateStart`: start date for the search range.
 - `uploadDateEnd`: end date for the search range.
-- `sortDirection`: sorting direction (ASC or DESC).
+- `sortDirection`: sorting direction (ASC or DESC). Default DESC.
 - `filename`: name of the file.
 - `filetype`: MIME type of the file.
 
