@@ -104,6 +104,10 @@ If using the provided Postman collection, update the URLs accordingly to match t
 ## 7. Testing
 The project includes both **unit** and **integration tests** using JUnit and Spring Boot Test.  
 
+Tests cover domain logic, persistence layer, and REST endpoints.
+
+Test coverage is verified using JaCoCo, achieving approximately 95% coverage across domain logic, application services, and REST controllers.
+
 Tests can be executed with:
 ```bash
 mvn test
