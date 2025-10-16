@@ -73,7 +73,17 @@ The REST API definition is provided in `openapi.yml`. It exposes endpoints for:
 - **POST /api/mgmt/{version}/assets/actions/upload** – Uploads an asset asynchronously.
 - **GET /api/mgmt/{version}/assets** – Retrieves assets by filters (filename, date range, status) with sorting.
 
-The API supports filters, sorting, and returns metadata in a consistent JSON structure.
+The **GET** endpoint supports the following optional filters:
+- `uploadDateStart`: start date for the search range.
+- `uploadDateEnd`: end date for the search range.
+- `sortDirection`: sorting direction (ASC or DESC).
+- `filename`: name of the file.
+- `filetype`: MIME type of the file.
+
+**Example usage:**
+```bash
+GET http://localhost:8080/api/mgmt/1/assets?uploadDateStart=2025-01-15T17:00:59Z&uploadDateEnd=2025-10-16T17:00:59Z&sortDirection=ASC&filename=logo_empresa2.png&filetype=image/png
+```
 
 A **Postman Collection** (`ASSET.postman_collection.json`) is included for testing different query and upload scenarios.
 
