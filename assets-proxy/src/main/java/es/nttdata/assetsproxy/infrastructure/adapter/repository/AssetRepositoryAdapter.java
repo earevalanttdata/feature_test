@@ -9,6 +9,7 @@ import es.nttdata.assetsproxy.infrastructure.persistence.entity.AssetEntity;
 import es.nttdata.assetsproxy.infrastructure.persistence.mapper.AssetEntityMapper;
 import es.nttdata.assetsproxy.infrastructure.persistence.spring.AssetJpaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static es.nttdata.assetsproxy.infrastructure.persistence.spring.AssetSpecifications.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 @Transactional
@@ -44,7 +46,7 @@ public class AssetRepositoryAdapter implements AssetRepositoryPort {
                 .and(uploadedAtTo(c.uploadDateEnd()))
                 .and(filenameLike(c.filenamePattern()))
                 .and(contentTypeEquals(c.filetype()));
-
+        log.info("Specification {}", spec);
         Sort sort = (c.sortDirection() == SortDirection.ASC)
                 ? Sort.by("uploadDate").ascending()
                 : Sort.by("uploadDate").descending();
