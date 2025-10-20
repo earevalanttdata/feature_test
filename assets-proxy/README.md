@@ -111,7 +111,7 @@ A **Postman Collection** (`ASSET.postman_collection.json`) is included for testi
 mvn clean package -DskipTests
 mvn spring-boot:run
 ```
-The application will start on the default port `8080`.
+The application will start on the default port `8080`. If the image is produced using Docker, the port is `8081`.
 
 ### Docker execution
 ```bash
