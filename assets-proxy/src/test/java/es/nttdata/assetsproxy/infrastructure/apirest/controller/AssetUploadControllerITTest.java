@@ -3,7 +3,7 @@ package es.nttdata.assetsproxy.infrastructure.apirest.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.nttdata.assetsproxy.application.usecase.UploadAssetUseCase;
 import es.nttdata.assetsproxy.boot.TestBootConfig;
-import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetFileUploadRequestDto;
+import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetFileUploadRequest;
 import es.nttdata.assetsproxy.infrastructure.apirest.mapper.AssetDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class AssetUploadControllerITTest {
 
     @Test
     void upload_validates_body() throws Exception {
-        AssetFileUploadRequestDto invalid = new AssetFileUploadRequestDto(
+        AssetFileUploadRequest invalid = new AssetFileUploadRequest(
                 "", "ZHVtbXk=", "image/png"
         );
         mvc.perform(post("/api/mgmt/1/assets/actions/upload")
@@ -50,7 +50,7 @@ class AssetUploadControllerITTest {
     void upload_returns_202_and_id() throws Exception {
         when(uploadAssetUseCase.accept(any())).thenReturn(123L);
 
-        AssetFileUploadRequestDto req = new AssetFileUploadRequestDto(
+        AssetFileUploadRequest req = new AssetFileUploadRequest(
                 "foto.png",
                 "ZHVtbXk=",  "image/png"
         );

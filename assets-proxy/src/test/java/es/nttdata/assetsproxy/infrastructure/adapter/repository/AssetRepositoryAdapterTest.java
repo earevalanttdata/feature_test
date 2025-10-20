@@ -1,6 +1,6 @@
 package es.nttdata.assetsproxy.infrastructure.adapter.repository;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 import es.nttdata.assetsproxy.domain.model.SortDirection;
@@ -40,14 +40,14 @@ class AssetRepositoryAdapterTest {
     @Test
     void save_mapsDomainToEntity_persists_andMapsBack() {
         OffsetDateTime now = OffsetDateTime.now();
-        Asset domainIn = new Asset(null, "banner.jpg", "image/jpeg", 123L,null, now, AssetStatus.PENDING
+        AssetDomain domainIn = new AssetDomain(null, "banner.jpg", "image/jpeg", 123,null, now, AssetStatus.PENDING
         );
 
         AssetEntity entityIn = new AssetEntity();
         entityIn.setId(null);
         entityIn.setFilename("banner.jpg");
         entityIn.setContentType("image/jpeg");
-        entityIn.setSize(123L);
+        entityIn.setSize(123);
         entityIn.setUploadDate(now);
         entityIn.setStatus("PENDING");
 
@@ -55,19 +55,19 @@ class AssetRepositoryAdapterTest {
         entitySaved.setId(101L);
         entitySaved.setFilename("banner.jpg");
         entitySaved.setContentType("image/jpeg");
-        entitySaved.setSize(123L);
+        entitySaved.setSize(123);
         entitySaved.setUploadDate(now);
         entitySaved.setStatus("PENDING");
         entitySaved.setUrl("images/banner.jpg");
 
-        Asset domainOut =
-                new Asset(101L, "banner.jpg", "image/jpeg", 123L, "images/banner.jpg", now, AssetStatus.PENDING);
+        AssetDomain domainOut =
+                new AssetDomain(101L, "banner.jpg", "image/jpeg", 123, "images/banner.jpg", now, AssetStatus.PENDING);
 
         when(mapper.toEntity(domainIn)).thenReturn(entityIn);
         when(repository.save(entityIn)).thenReturn(entitySaved);
         when(mapper.toDomain(entitySaved)).thenReturn(domainOut);
 
-        Asset result = adapter.save(domainIn);
+        AssetDomain result = adapter.save(domainIn);
 
         assertNotNull(result);
         assertEquals(101L, result.getId());
@@ -86,14 +86,14 @@ class AssetRepositoryAdapterTest {
         AssetEntity e1 = new AssetEntity(); e1.setId(1L); e1.setFilename("invoice-1.png");
         AssetEntity e2 = new AssetEntity(); e2.setId(2L); e2.setFilename("invoice-2.png");
 
-        Asset a1 = new Asset(1L, "invoice-1.png", "image/png", null, null, null, AssetStatus.PENDING);
-        Asset a2 = new Asset(2L, "invoice-2.png", "image/png", null, null, null, AssetStatus.PENDING);
+        AssetDomain a1 = new AssetDomain(1L, "invoice-1.png", "image/png", null, null, null, AssetStatus.PENDING);
+        AssetDomain a2 = new AssetDomain(2L, "invoice-2.png", "image/png", null, null, null, AssetStatus.PENDING);
 
         when(repository.findAll(any(Specification.class), any(Sort.class))).thenReturn(List.of(e1, e2));
         when(mapper.toDomain(e1)).thenReturn(a1);
         when(mapper.toDomain(e2)).thenReturn(a2);
 
-        List<Asset> result = adapter.search(criteria);
+        List<AssetDomain> result = adapter.search(criteria);
 
         ArgumentCaptor<Sort> sortCaptor = ArgumentCaptor.forClass(Sort.class);
         verify(repository).findAll(any(Specification.class), sortCaptor.capture());
@@ -118,7 +118,7 @@ class AssetRepositoryAdapterTest {
 
         when(repository.findAll(any(Specification.class), any(Sort.class))).thenReturn(List.of());
 
-        List<Asset> result = adapter.search(criteria);
+        List<AssetDomain> result = adapter.search(criteria);
 
         assertNotNull(result);
 

@@ -1,11 +1,8 @@
 package es.nttdata.assetsproxy.domain.port.async;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 
 public interface AssetPublisherPort {
 
-    /**
-     * La llamada NO debe bloquear: el POST responderá 202 inmediatamente.
-     */
-    void publishAsync(Asset asset);
+    void publishAsync(AssetDomain asset);
 }

@@ -42,7 +42,7 @@ The structure aligns with **DDD** principles:
 - **MapStruct** for DTO mapping
 - **Lombok** for boilerplate reduction
 - **Actuator** for monitoring
-- **JUnit & Spring Boot Test** for unit and integration tests
+- **Spring Boot Starter Test (JUnit 5, Mockito, Spring Test/MocMvc),** for unit and integration tests. Jacoco is used for coverage.  
 
 Build tool: **Maven**
 
@@ -74,15 +74,30 @@ The REST API definition is provided in `openapi.yml`. It exposes endpoints for:
 - **GET /api/mgmt/{version}/assets** – Retrieves assets by filters (filename, date range, status) with sorting.
 
 The **GET** endpoint supports the following optional filters:
-- `uploadDateStart`: start date for the search range.
-- `uploadDateEnd`: end date for the search range.
+- `uploadDateStart`: start date for the search range. (The date format must be in datetime format.)
+- `uploadDateEnd`: end date for the search range. (The date format must be in datetime format.)
 - `sortDirection`: sorting direction (ASC or DESC). Default DESC.
 - `filename`: name of the file.
 - `filetype`: MIME type of the file.
 
-**Example usage:**
+**Examples usage:**
+
 ```bash
-GET http://localhost:8080/api/mgmt/1/assets?uploadDateStart=2025-01-15T17:00:59Z&uploadDateEnd=2025-10-16T17:00:59Z&sortDirection=ASC&filename=logo_empresa2.png&filetype=image/png
+http://localhost:8081/api/mgmt/1/assets/actions/upload
+
+{
+  "filename": "Imagen2",
+  "encodedFile": "aG9sYQ==",
+  "contentType": "image/png"
+}
+
+```
+
+```bash
+GET http://localhost:8081/api/mgmt/1/assets?uploadDateStart=2025-01-15T17:00:59Z&uploadDateEnd=2025-10-16T17:00:59Z&sortDirection=ASC
+
+GET http://localhost:8081/api/mgmt/1/assets?filename=logo_empresa2.png&filetype=image/&sortDirection=ASC
+
 ```
 
 A **Postman Collection** (`ASSET.postman_collection.json`) is included for testing different query and upload scenarios.

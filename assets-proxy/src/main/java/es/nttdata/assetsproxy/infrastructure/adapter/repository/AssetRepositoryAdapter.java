@@ -1,6 +1,6 @@
 package es.nttdata.assetsproxy.infrastructure.adapter.repository;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 import es.nttdata.assetsproxy.domain.model.SortDirection;
@@ -30,18 +30,18 @@ public class AssetRepositoryAdapter implements AssetRepositoryPort {
     private final AssetEntityMapper mapper;
 
     @Override
-    public Asset save(Asset asset) {
+    public AssetDomain save(AssetDomain asset) {
         AssetEntity saved = repository.save(mapper.toEntity(asset));
         return mapper.toDomain(saved);
     }
 
     @Override
-    public Optional<Asset> findById(Long id) {
+    public Optional<AssetDomain> findById(Long id) {
         return repository.findById(id).map(mapper::toDomain);
     }
 
     @Override
-    public List<Asset> search(SearchCriteria c) {
+    public List<AssetDomain> search(SearchCriteria c) {
         Specification<AssetEntity> spec = uploadedAtFrom(c.uploadDateStart())
                 .and(uploadedAtTo(c.uploadDateEnd()))
                 .and(filenameLike(c.filenamePattern()))

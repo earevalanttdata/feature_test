@@ -75,7 +75,7 @@
 					"response": []
 				},
 				{
-					"name": "assetsByDatesRange",
+					"name": "assetsByFilters",
 					"request": {
 						"method": "GET",
 						"header": [],

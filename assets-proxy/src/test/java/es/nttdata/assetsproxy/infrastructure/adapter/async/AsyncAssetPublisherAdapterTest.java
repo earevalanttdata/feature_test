@@ -1,6 +1,6 @@
 package es.nttdata.assetsproxy.infrastructure.adapter.async;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.port.repository.AssetRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ class AsyncAssetPublisherAdapterTest {
 
     @Test
     void publishAsync_whenContentIsNull_marksAsFailed() {
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(123L);
         when(asset.getFileBytes()).thenReturn(null);
 
@@ -40,7 +40,7 @@ class AsyncAssetPublisherAdapterTest {
 
     @Test
     void publishAsync_whenContentIsEmpty_marksAsFailed() {
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(456L);
         when(asset.getFileBytes()).thenReturn(new byte[0]);
 
@@ -52,7 +52,7 @@ class AsyncAssetPublisherAdapterTest {
 
     @Test
     void publishAsync_whenImageFile_updatesUrlAndCompletes() {
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(1L);
 
         when(asset.getFilename()).thenReturn("..\\sub/../My Image.JPG");
@@ -73,7 +73,7 @@ class AsyncAssetPublisherAdapterTest {
 
     @Test
     void publishAsync_whenVideoFile_updatesUrlAndCompletes() {
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(2L);
         when(asset.getFilename()).thenReturn("clip.MP4");
         when(asset.getFileBytes()).thenReturn(new byte[]{9,9,9});
@@ -93,7 +93,7 @@ class AsyncAssetPublisherAdapterTest {
     @Test
     void publishAsync_whenUnsupportedExtension_marksAsFailed() {
         // given
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(3L);
         when(asset.getFilename()).thenReturn("readme.pdf");
         when(asset.getFileBytes()).thenReturn(new byte[]{1});
@@ -106,7 +106,7 @@ class AsyncAssetPublisherAdapterTest {
 
     @Test
     void publishAsync_whenContentTypeIsImage_usesContentTypeFolder() {
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(10L);
         when(asset.getContentType()).thenReturn("image/png");
         when(asset.getFilename()).thenReturn("whatever.dat");
@@ -126,7 +126,7 @@ class AsyncAssetPublisherAdapterTest {
     @Test
     void publishAsync_whenContentTypeIsVideo_usesContentTypeFolder() {
 
-        Asset asset = mock(Asset.class);
+        AssetDomain asset = mock(AssetDomain.class);
         when(asset.getId()).thenReturn(11L);
         when(asset.getContentType()).thenReturn("video/mp4");
         when(asset.getFilename()).thenReturn("something.unknown");

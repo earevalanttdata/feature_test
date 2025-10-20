@@ -1,6 +1,6 @@
 package es.nttdata.assetsproxy.domain.port.repository;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 
@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface AssetRepositoryPort {
 
-    Optional<Asset> findById(Long id);
+    Optional<AssetDomain> findById(Long id);
 
-    Asset save(Asset asset);
+    AssetDomain save(AssetDomain asset);
 
-    List<Asset> search(SearchCriteria criteria);
+    List<AssetDomain> search(SearchCriteria criteria);
 
     void updateStatus(Long id, AssetStatus status);
 

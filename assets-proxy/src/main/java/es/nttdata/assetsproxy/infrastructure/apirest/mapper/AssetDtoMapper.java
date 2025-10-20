@@ -1,9 +1,9 @@
 package es.nttdata.assetsproxy.infrastructure.apirest.mapper;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
-import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetFileUploadRequestDto;
-import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetResponseDto;
+import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetFileUploadRequest;
+import es.nttdata.assetsproxy.infrastructure.apirest.dto.Asset;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -23,9 +23,9 @@ public interface AssetDtoMapper {
     @Mapping(target = "fileBytes", source = "encodedFile", qualifiedByName = "decodeBase64")
     @Mapping(
             target = "size",
-            expression = "java((long) mapEncodedFileToBytes(dto.encodedFile()).length)"
+            expression = "java((int) mapEncodedFileToBytes(dto.encodedFile()).length)"
     )
-    Asset toDomain(AssetFileUploadRequestDto dto);
+    AssetDomain toDomain(AssetFileUploadRequest dto);
 
     @Mapping(
             target = "id",
@@ -34,9 +34,9 @@ public interface AssetDtoMapper {
     @Mapping(target = "url", source = "url")
     @Mapping(target = "size", source = "size")
     @Mapping(target = "uploadDate", source = "uploadDate")
-    AssetResponseDto toResponseDto(Asset asset);
+    Asset toResponseDto(AssetDomain asset);
 
-    List<AssetResponseDto> toResponseDtoList(List<Asset> assets);
+    List<Asset> toResponseDtoList(List<AssetDomain> assets);
 
     @Named("decodeBase64")
     default byte[] mapEncodedFileToBytes(String encodedFile) {

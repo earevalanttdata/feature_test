@@ -22,7 +22,7 @@ public class AssetEntity {
     private String contentType;
 
     @Column(name = "size")
-    private Long size;
+    private Integer size;
 
     @Column(name = "url")
     private String url;

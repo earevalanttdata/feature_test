@@ -2,13 +2,16 @@ package es.nttdata.assetsproxy.application.usecase;
 
 import es.nttdata.assetsproxy.domain.exception.AssetNotFoundException;
 import es.nttdata.assetsproxy.domain.exception.BusinessException;
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
 import es.nttdata.assetsproxy.domain.model.SortDirection;
 import es.nttdata.assetsproxy.domain.port.repository.AssetRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
 import java.util.Collections;
@@ -17,15 +20,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class SearchAssetsUseCaseTest {
 
+    @Mock
     private AssetRepositoryPort repository;
 
     private SearchAssetsUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = mock(AssetRepositoryPort.class);
         useCase = new SearchAssetsUseCase(repository);
     }
 
@@ -37,7 +41,7 @@ class SearchAssetsUseCaseTest {
 
     @Test
     void repository_returns_null_throws_not_found() {
-        SearchCriteria criteria = new SearchCriteria(null, null, null, null, SortDirection.ASC);
+        SearchCriteria criteria = new SearchCriteria(OffsetDateTime.now(), OffsetDateTime.now().plusDays(1), null, null, SortDirection.ASC);
         when(repository.search(criteria)).thenReturn(null);
 
         assertThrows(AssetNotFoundException.class, () -> useCase.search(criteria));
@@ -45,10 +49,10 @@ class SearchAssetsUseCaseTest {
 
     @Test
     void empty_list_is_ok() {
-        SearchCriteria criteria = new SearchCriteria(null, null, "banner", "image/png", SortDirection.DESC);
+        SearchCriteria criteria = new SearchCriteria(OffsetDateTime.now(), OffsetDateTime.now().plusDays(1), "banner", "image/png", SortDirection.DESC);
         when(repository.search(criteria)).thenReturn(Collections.emptyList());
 
-        List<Asset> result = useCase.search(criteria);
+        List<AssetDomain> result = useCase.search(criteria);
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
@@ -62,12 +66,12 @@ class SearchAssetsUseCaseTest {
                 "image/png",
                 SortDirection.ASC
         );
-        List<Asset> stub = List.of(
-                new Asset(1L, "logo.png", "image/png", 100L, "s3://bucket/logo.png", OffsetDateTime.now(), AssetStatus.COMPLETED)
+        List<AssetDomain> stub = List.of(
+                new AssetDomain(1L, "logo.png", "image/png", 100, "s3://bucket/logo.png", OffsetDateTime.now(), AssetStatus.COMPLETED)
         );
         when(repository.search(criteria)).thenReturn(stub);
 
-        List<Asset> result = useCase.search(criteria);
+        List<AssetDomain> result = useCase.search(criteria);
         assertEquals(1, result.size());
         assertEquals("logo.png", result.getFirst().getFilename());
     }

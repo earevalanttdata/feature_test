@@ -2,10 +2,10 @@ package es.nttdata.assetsproxy.infrastructure.apirest.controller;
 
 import es.nttdata.assetsproxy.application.usecase.SearchAssetsUseCase;
 import es.nttdata.assetsproxy.boot.TestBootConfig;
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.model.SearchCriteria;
-import es.nttdata.assetsproxy.infrastructure.apirest.dto.AssetResponseDto;
+import es.nttdata.assetsproxy.infrastructure.apirest.dto.Asset;
 import es.nttdata.assetsproxy.infrastructure.apirest.mapper.AssetDtoMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +41,12 @@ class AssetQueryControllerITTest {
 
     @Test
     void search_maps_query_params_and_returns_list() throws Exception {
-        List<Asset> domain = List.of(
-                new Asset(7L, "logo.png", "image/png", 10L, "s3://logo.png",
+        List<AssetDomain> domain = List.of(
+                new AssetDomain(7L, "logo.png", "image/png", 10, "s3://logo.png",
                         OffsetDateTime.now(), AssetStatus.COMPLETED)
         );
-        List<AssetResponseDto> dto = List.of(
-                new AssetResponseDto("7", "logo.png", "image/png", "s3://logo.png", 10L, domain.get(0).getUploadDate())
+        List<Asset> dto = List.of(
+                new Asset("7", "logo.png", "image/png", "s3://logo.png", 10, domain.get(0).getUploadDate())
         );
 
         when(useCase.search(any(SearchCriteria.class))).thenReturn(domain);

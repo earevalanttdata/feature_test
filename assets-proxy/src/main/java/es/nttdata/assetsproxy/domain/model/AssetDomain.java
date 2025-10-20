@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 
 @Setter
 @Getter
-public class Asset {
+public class AssetDomain {
 
     private Long id;
     private String filename;
@@ -19,16 +19,16 @@ public class Asset {
 
     private byte[] fileBytes;
 
-    public Asset() {
+    public AssetDomain() {
     }
 
-    public Asset(Long id,
-                 String filename,
-                 String contentType,
-                 Integer size,
-                 String url,
-                 OffsetDateTime uploadDate,
-                 AssetStatus status) {
+    public AssetDomain(Long id,
+                       String filename,
+                       String contentType,
+                       Integer size,
+                       String url,
+                       OffsetDateTime uploadDate,
+                       AssetStatus status) {
 
         this.id = id;
         this.filename = filename;

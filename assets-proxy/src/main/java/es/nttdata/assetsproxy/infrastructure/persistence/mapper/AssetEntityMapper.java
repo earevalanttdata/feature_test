@@ -1,6 +1,6 @@
 package es.nttdata.assetsproxy.infrastructure.persistence.mapper;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.infrastructure.persistence.entity.AssetEntity;
 import org.mapstruct.Mapper;
@@ -17,7 +17,7 @@ public interface AssetEntityMapper {
                     "? asset.getStatus().name() " +
                     ": AssetStatus.PENDING.name())"
     )
-    AssetEntity toEntity(Asset asset);
+    AssetEntity toEntity(AssetDomain asset);
 
-    Asset toDomain(AssetEntity entity);
+    AssetDomain toDomain(AssetEntity entity);
 }

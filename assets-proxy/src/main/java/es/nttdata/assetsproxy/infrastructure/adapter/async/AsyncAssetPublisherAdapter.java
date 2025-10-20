@@ -1,6 +1,7 @@
 package es.nttdata.assetsproxy.infrastructure.adapter.async;
 
-import es.nttdata.assetsproxy.domain.model.Asset;
+import es.nttdata.assetsproxy.domain.exception.BusinessException;
+import es.nttdata.assetsproxy.domain.model.AssetDomain;
 import es.nttdata.assetsproxy.domain.model.AssetStatus;
 import es.nttdata.assetsproxy.domain.port.async.AssetPublisherPort;
 import es.nttdata.assetsproxy.domain.port.repository.AssetRepositoryPort;
@@ -21,7 +22,7 @@ public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
 
     @Async
     @Override
-    public void publishAsync(Asset asset) {
+    public void publishAsync(AssetDomain asset) {
         try {
             byte[] content = asset.getFileBytes();
             if (content == null || content.length == 0) {
@@ -30,11 +31,8 @@ public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
                 return;
             }
             repository.updateStatus(asset.getId(), AssetStatus.UPLOADING);
-
             log.info("Simulating upload: '{}' ({} bytes).", asset.getFilename(), content.length);
             String url = buildStorageUrl(asset.getFilename(), asset.getContentType());
-            log.info("Simulation of upload completed.");
-
             repository.updateStorageUrl(asset.getId(), url);
 
             repository.updateStatus(asset.getId(), AssetStatus.COMPLETED);
@@ -65,7 +63,7 @@ public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
         if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mov") || lowerName.endsWith(".mpeg") || lowerName.endsWith(".webm")) {
             return "videos";
         }
-        throw new IllegalArgumentException("Only images and videos are allowed.");
+        throw new BusinessException("Only images and videos are allowed.");
     }
 
     private static String sanitizeFilename(String raw) {
