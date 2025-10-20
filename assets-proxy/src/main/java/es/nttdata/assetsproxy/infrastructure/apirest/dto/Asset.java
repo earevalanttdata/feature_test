@@ -7,6 +7,6 @@ public record AssetResponseDto(
         String filename,
         String contentType,
         String url,
-        Long size,
+        Integer size,
         OffsetDateTime uploadDate
 ) { }

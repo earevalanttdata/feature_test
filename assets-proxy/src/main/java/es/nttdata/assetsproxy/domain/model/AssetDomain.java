@@ -12,7 +12,7 @@ public class Asset {
     private Long id;
     private String filename;
     private String contentType;
-    private Long size;
+    private Integer size;
     private String url;
     private OffsetDateTime uploadDate;
     private AssetStatus status;
@@ -25,7 +25,7 @@ public class Asset {
     public Asset(Long id,
                  String filename,
                  String contentType,
-                 Long size,
+                 Integer size,
                  String url,
                  OffsetDateTime uploadDate,
                  AssetStatus status) {

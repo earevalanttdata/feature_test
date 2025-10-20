@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
@@ -20,12 +20,17 @@ spring:
     defer-datasource-initialization: false
     properties:
       hibernate.jdbc.time_zone: UTC
+
   jackson:
     time-zone: UTC
+  task:
+    execution:
+      virtual-threads: true
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+
 
