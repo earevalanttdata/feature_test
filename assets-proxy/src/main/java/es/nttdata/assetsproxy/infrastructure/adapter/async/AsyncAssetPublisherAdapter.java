@@ -11,12 +11,17 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
+
+    private static final Set<String> IMAGE_EXTENSIONS = Set.of(".png", ".jpg", ".jpeg", ".webp");
+
+    private static final Set<String> VIDEO_EXTENSIONS = Set.of(".mp4", ".mov", ".mpeg", ".webm");
 
     private final AssetRepositoryPort repository;
 
@@ -57,20 +62,21 @@ public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
             if (lower.startsWith("video/")) return "videos";
         }
         String lowerName = filename.toLowerCase(Locale.ROOT);
-        if (lowerName.endsWith(".png") || lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg") || lowerName.endsWith(".webp")) {
+
+        if (IMAGE_EXTENSIONS.stream().anyMatch(lowerName::endsWith)) {
             return "images";
         }
-        if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mov") || lowerName.endsWith(".mpeg") || lowerName.endsWith(".webm")) {
+        if (VIDEO_EXTENSIONS.stream().anyMatch(lowerName::endsWith)) {
             return "videos";
         }
         throw new BusinessException("Only images and videos are allowed.");
     }
 
     private static String sanitizeFilename(String raw) {
-        String justName = raw.replace("\\", "/"); // Evita path traversal
+        String justName = raw.replace("\\", "/");
         int idx = justName.lastIndexOf('/');
         if (idx >= 0) justName = justName.substring(idx + 1);
-        justName = justName.replaceAll("[\\r\\n\\t]", "");// elimina caracteres raros
+        justName = justName.replaceAll("[\\r\\n\\t]", "");
         return justName;
     }
 }
