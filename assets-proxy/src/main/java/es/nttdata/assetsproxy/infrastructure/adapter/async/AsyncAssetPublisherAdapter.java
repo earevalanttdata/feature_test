@@ -29,17 +29,19 @@ public class AsyncAssetPublisherAdapter implements AssetPublisherPort {
     @Override
     public void publishAsync(AssetDomain asset) {
         try {
+            //Thread.sleep(10000);
             byte[] content = asset.getFileBytes();
             if (content == null || content.length == 0) {
                 log.error("ERROR: The content cannot be empty");
                 repository.updateStatus(asset.getId(), AssetStatus.FAILED);
                 return;
             }
+
             repository.updateStatus(asset.getId(), AssetStatus.UPLOADING);
             log.info("Simulating upload: '{}' ({} bytes).", asset.getFilename(), content.length);
             String url = buildStorageUrl(asset.getFilename(), asset.getContentType());
             repository.updateStorageUrl(asset.getId(), url);
-
+            //Thread.sleep(10000);
             repository.updateStatus(asset.getId(), AssetStatus.COMPLETED);
             log.info("Simulation of upload completed.");
         } catch (Exception ex) {

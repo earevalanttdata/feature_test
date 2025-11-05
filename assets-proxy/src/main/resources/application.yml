@@ -14,15 +14,16 @@ spring:
     init:
       mode: always
   jpa:
+    show-sql: true # <--- AGREGO ESTO
     hibernate:
-      ddl-auto: none
+      ddl-auto: none #no toca las tablas (no crea ni actualiza el esquema automáticamente).
     open-in-view: false
-    defer-datasource-initialization: false
+    defer-datasource-initialization: false #Controla si la inicialización de datos (SQL) debe esperar a que JPA esté listo.
     properties:
-      hibernate.jdbc.time_zone: UTC
-
+      hibernate.jdbc.time_zone: UTC #Fuerza a Hibernate a usar la zona horaria UTC para las fechas guardadas/recuperadas de la base.
+      hibernate.format_sql: true # <--- AGREGO ESTO
   jackson:
-    time-zone: UTC
+    time-zone: UTC #Define la zona horaria por defecto para serializar y deserializar fechas en JSON.
   task:
     execution:
       virtual-threads: true
@@ -32,5 +33,11 @@ management:
     web:
       exposure:
         include: health,info
+
+logging: # <--- AGREGO ESTO
+  level:
+    org.hibernate.SQL: DEBUG
+    # Muestra los valores de los parámetros que se están vinculando al SQL
+    org.hibernate.orm.jdbc.bind: TRACE
 
 
